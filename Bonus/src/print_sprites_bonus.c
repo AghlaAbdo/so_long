@@ -6,38 +6,32 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:22:27 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:59:09 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/25 18:47:30 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
-void	print_textures(char *map, t_data *data, int *x, int *y)
+void	print_textures(char *map, t_data *data, int *y)
 {
-	int	w;
-	int	h;
+	int	x;
 
-	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL, &w, &h);
-	data->walk = mlx_xpm_file_to_image(data->mlx_ptr, WALK, &w, &h);
-	data->collect = mlx_xpm_file_to_image(data->mlx_ptr, COLLECT, &w, &h);
-	data->door = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_CLOSE, &w, &h);
-	check_valid_imgs(data, (void *[]){data->wall, data->walk,
-		data->collect, data->door}, 4);
-	while (map[*x])
+	x = 0;
+	while (map[x])
 	{
-		if (map[*x] == '1')
-			put_wall(data, *x * 48, *y * 48);
-		else if (map[*x] == '0' || map[*x] == 'P')
-			put_walk(data, *x * 48, *y * 48);
-		else if (map[*x] == 'C')
-			put_collect(data, *x * 48, *y * 48);
-		else if (map[*x] == 'E')
+		if (map[x] == '1')
+			put_wall(data, x * 48, *y * 48);
+		else if (map[x] == '0' || map[x] == 'P')
+			put_walk(data, x * 48, *y * 48);
+		else if (map[x] == 'C')
+			put_collect(data, x * 48, *y * 48);
+		else if (map[x] == 'E')
 		{
-			data->map_data.exit_x = *x * 48;
+			data->map_data.exit_x = x * 48;
 			data->map_data.exit_y = *y * 48;
-			put_door(data, *x * 48, *y * 48, 0);
+			put_door(data, x * 48, *y * 48, 0);
 		}
-		(*x)++;
+		x++;
 	}
 }
 

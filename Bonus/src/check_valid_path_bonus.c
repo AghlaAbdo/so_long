@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 11:17:41 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:58:58 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:32 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	check_for_invalid(t_data *data, char *map, int e, int p)
 {

@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:27:00 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:58:50 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:12 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	clear_enm_pos(t_data *data)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:55:53 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 22:00:21 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/25 18:51:00 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../get_next_line/get_next_line.h"
 # include "../Libft/libft.h"
@@ -96,7 +96,7 @@ void	set_enemy_pos(t_data *data, char **map);
 void	my_destroy_imgs(t_data *data, void **img, int n);
 void	init_plr_frames(t_data *data, int der);
 void	check_for_loss(t_data *data);
-void	print_textures(char *map, t_data *data, int *x, int *y);
+void	print_textures(char *map, t_data *data, int *y);
 void	print_move(t_data *data);
 void	print_move(t_data *data);
 void	put_collect(t_data *data, int x, int y);

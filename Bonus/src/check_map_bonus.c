@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:21:52 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 20:15:47 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:23 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	check_line(t_data *data, char *map_line, char *map)
 {

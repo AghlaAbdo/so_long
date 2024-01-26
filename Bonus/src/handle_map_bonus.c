@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:12 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 20:13:56 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:39 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	check_wall_line(t_data *data, char *map_line, char *map)
 {

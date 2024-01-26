@@ -4,7 +4,7 @@ CC 			= cc
 CFLAGS		= -Wall -Wextra -Werror
 LIBFT		=  ./Libft/libft.a
 HEADER		= ./Mandatory/so_long.h
-HEADER_BONS = ./Bonus/so_long.h
+HEADER_BONS = ./Bonus/so_long_bonus.h
 HEADER_GNL	= ./get_next_line/get_next_line.h
 SRCS		=	./Mandatory/src/handle_map.c			\
 				./Mandatory/src/check_map.c				\
@@ -29,7 +29,7 @@ SRCS_BONS 	=	./Bonus/src/handle_map_bonus.c			\
 				./Bonus/src/check_functions_bonus.c		\
 				./get_next_line/get_next_line.c			\
 				./get_next_line/get_next_line_utils.c	\
-				./Bonus/so_long.c
+				./Bonus/so_long_bonus.c
 				
 OBJS = $(SRCS:.c=.o)
 OBJS_BONS = $(SRCS_BONS:.c=.o)

@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 19:50:00 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:59:12 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:52 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	my_destroy_imgs(t_data *data, void **img, int n)
 {

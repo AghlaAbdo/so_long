@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:35:57 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:59:06 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:42 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	set_plr_position(t_data *data, char **map)
 {

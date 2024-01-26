@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:15:42 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 20:12:15 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:35 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 void	set_enemy_pos(t_data *data, char **map)
 {

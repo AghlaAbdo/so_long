@@ -6,11 +6,11 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:50:34 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 15:58:53 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:43:20 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../so_long_bonus.h"
 
 int	check_wall(t_data *data, int x, int y)
 {

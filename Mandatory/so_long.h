@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:55:53 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 22:10:14 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/26 08:56:48 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*p_img;
+	void	*p_frm_r;
+	void	*p_frm_l;
 	void	*wall;
 	void	*walk;
-	void	*door;
+	void	*door_o;
+	void	*door_c;
 	void	*collect;
 	int		fd;
 	int		moves;
@@ -67,7 +69,7 @@ void	put_walk(t_data *data, int x, int y);
 void	my_destroy_imgs(t_data *data, void **img, int n);
 void	init_plr_frames(t_data *data, int der);
 void	check_for_loss(t_data *data);
-void	print_textures(char *map, t_data *data, int *x, int *y);
+void	print_textures(char *map, t_data *data, int *y);
 void	print_move(t_data *data);
 void	print_move(t_data *data);
 void	put_collect(t_data *data, int x, int y);

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:54:48 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 22:00:08 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/25 19:37:53 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	create_map(char **map, t_data *data)
 {
 	int	y;
-	int	x;
+	int	w;
+	int	h;
 
+	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL, &w, &h);
+	data->walk = mlx_xpm_file_to_image(data->mlx_ptr, WALK, &w, &h);
+	data->collect = mlx_xpm_file_to_image(data->mlx_ptr, COLLECT, &w, &h);
+	data->door = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_CLOSE, &w, &h);
+	check_valid_imgs(data, (void *[]){data->wall, data->walk,
+		data->collect, data->door}, 4);
 	y = 0;
 	while (map[y])
 	{
-		x = 0;
-		print_textures(map[y], data, &x, &y);
+		print_textures(map[y], data, &y);
 		y++;
 	}
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 24, 24, 0xFFFFFF, "Move: 0");
@@ -74,9 +80,15 @@ int	main(int argc, char *argv[])
 	data_init(&data);
 	data.map_data.map = handle_map(argv[1], &data);
 	data.mlx_ptr = mlx_init();
+	if (data.mlx_ptr)
+		data.win_ptr = mlx_new_window(data.mlx_ptr,
+				(data.win_x) * 48, data.win_y * 48, "so_long");
+	if (!data.mlx_ptr || !data.win_ptr)
+	{
+		clear_map_arr(data.map_data.map);
+		force_exit("Error\nCan't establish connection and create window\n");
+	}
 	set_exit_position(&data);
-	data.win_ptr = mlx_new_window(data.mlx_ptr,
-			(data.win_x) * 48, data.win_y * 48, "so_long");
 	init_plr_frames(&data, 0);
 	init_enm_frames(&data);
 	create_map(data.map_data.map, &data);
