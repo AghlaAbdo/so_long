@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:50:34 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/22 17:46:25 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/26 10:29:19 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,4 @@ void	check_for_win(t_data *data)
 	{
 		close_exit(data, "Congratulations! You Won :D\n");
 	}
-}
-
-void	change_der(t_data *data, int keysem)
-{
-	if (keysem == 0)
-		data_imgs_des_init(data, 1);
-	else if (keysem == 2)
-		data_imgs_des_init(data, 0);
 }
