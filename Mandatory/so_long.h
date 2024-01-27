@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:55:53 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/27 10:36:16 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 11:17:37 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "../Libft/libft.h"
 # include <mlx.h>
 # include <fcntl.h>
-# include <stdio.h>
 
 # define P_R_F_1 "./Mandatory/textures/player1.xpm"
 # define P_L_F_1 "./Mandatory/textures/player1_left.xpm"
@@ -76,7 +75,7 @@ int		close_exit(t_data *data, char *err);
 void	clear_map_arr(char **map);
 void	check_line(t_data *data, char *map_line, char *map);
 void	check_file_format(t_data *data, char *map);
-void	check_for_characters(char *line, char *map);
+void	check_for_characters(t_data *data, char *line, char *map);
 void	check_for_invalid(t_data *data, char *map, int e, int p);
 char	**check_map(t_data *data, char *map);
 void	check_valid_path(t_data *data, char **map, char **res, char *map_str);

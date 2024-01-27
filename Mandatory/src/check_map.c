@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:21:52 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/27 09:27:19 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 10:56:21 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_line(t_data *data, char *map_line, char *map)
 		close(data->fd);
 		force_exit(map, "Error\nmap is not surrounded by walls\n");
 	}
-	check_for_characters(map_line, map);
+	check_for_characters(data, map_line, map);
 }
 
 void	check_file_format(t_data *data, char *map)
@@ -58,7 +58,7 @@ void	check_file_format(t_data *data, char *map)
 	}
 }
 
-void	check_for_characters(char *line, char *map)
+void	check_for_characters(t_data *data, char *line, char *map)
 {
 	int	i;
 
@@ -68,6 +68,7 @@ void	check_for_characters(char *line, char *map)
 		if (line[i] != '1' && line[i] != '0'
 			&& line[i] != 'P' && line[i] != 'E' && line[i] != 'C')
 		{
+			close(data->fd);
 			free(line);
 			force_exit(map, "Error\nUnkown characters in the map\n");
 		}
