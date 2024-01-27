@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:12 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/24 14:43:39 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:40:38 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,68 +21,65 @@ void	check_wall_line(t_data *data, char *map_line, char *map)
 	i = 0;
 	if (count != data->win_x || map[0] == '\n')
 	{
-		free(map_line);
-		free(map);
 		close(data->fd);
-		force_exit("Error\nMap is not rectangular\n");
+		free(map_line);
+		force_exit(map, "Error\nMap is not rectangular\n");
 	}
 	while (map_line[i] && map_line[i] != '\n')
 	{
 		if (map_line[i] != '1')
 		{
-			free(map_line);
-			free(map);
 			close(data->fd);
-			force_exit("Error\nMap is not surrounded by walls\n");
+			free(map_line);
+			force_exit(map, "Error\nMap is not surrounded by walls\n");
 		}
 		i++;
 	}
 }
 
-int	map_height(char **map)
+void	free_and_exit(char *map_line, char *map, char *temp, char *err)
 {
-	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
+	free(temp);
+	free(map_line);
+	force_exit(map, err);
 }
 
-int	map_width(char *map)
+char	**handle_last_line(t_data *data, char *map_line, char *map)
 {
-	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
+	check_wall_line(data, map_line, map);
+	map = ft_strjoin(map, map_line);
+	close(data->fd);
+	free(map_line);
+	if (!map)
+		force_exit(NULL, "Error\nCan't allocate memory for the program");
+	return (check_map(data, map));
 }
 
 char	**handle_the_rest(t_data *data, char *map_line, char *map, char *temp)
 {
 	int	count;
 
+	if (!temp)
+		free_and_exit(map_line, map, temp, "Error\nCan't allocate memory");
+	count = 0;
 	while (map_line)
 	{
 		free(map_line);
 		map_line = get_next_line(data->fd);
 		if (!map_line && temp[count] == '\n')
-			force_exit("Error\nMap is not rectangular\n");
+			force_exit(temp, "Error\nMap is not rectangular\n");
 		free(temp);
 		if (!map_line)
 			break ;
 		data->win_y += 1;
 		count = ft_strlen(map_line);
 		if (map_line[count] != '\n')
-		{
-			check_wall_line(data, map_line, map);
-			map = ft_strjoin(map, map_line);
-			return (close(data->fd), free(map_line), check_map(data, map));
-		}
+			return (handle_last_line(data, map_line, map));
 		check_line(data, map_line, map);
 		temp = ft_strdup(map_line);
 		map = ft_strjoin(map, map_line);
+		if (!temp || !map)
+			free_and_exit(map_line, map, temp, "Error\nCan't allocate memory");
 	}
 	return (close(data->fd), check_map(data, map));
 }
@@ -94,14 +91,22 @@ char	**handle_map(char *map, t_data *data)
 
 	data->fd = open(map, O_RDONLY);
 	if (data->fd < 0)
-		force_exit("Error\nInvalid file path\n");
-	check_file_path(data, map);
+		force_exit(NULL, "Error\nInvalid file path\n");
+	check_file_format(data, map);
 	map_line = get_next_line(data->fd);
 	if (!map_line)
-		force_exit("Error\nFile is empty\n");
+	{
+		close(data->fd);
+		force_exit(NULL, "Error\nFile is empty\n");
+	}
 	count = ft_strlen(map_line);
 	data->win_x = count;
 	map = ft_strjoin(ft_strdup(""), map_line);
+	if (!map)
+	{
+		close(data->fd);
+		force_exit(map_line, "Error\nCan't allocate memory for the program");
+	}
 	check_wall_line(data, map_line, map);
 	data->win_y = 1;
 	return (handle_the_rest(data, map_line, map, ft_strdup("")));

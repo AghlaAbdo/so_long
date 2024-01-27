@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:55:53 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/25 18:51:00 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 10:37:03 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../get_next_line/get_next_line.h"
 # include "../Libft/libft.h"
 # include <mlx.h>
+# include <stdio.h>
 
 # define P_FRAMES 6
 # define E_FRAMES 3
@@ -62,13 +63,15 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*frms[6];
+	void	*frms_r[6];
+	void	*frms_l[6];
 	void	*wall;
 	void	*walk;
-	void	*door;
 	void	*collect;
+	void	*door_c;
+	void	*door_o;
 	int		fd;
-	int		moves;
+	size_t	moves;
 	int		frm;
 	int		win_x;
 	int		win_y;
@@ -85,45 +88,36 @@ typedef struct s_data
 char	**handle_map(char *map, t_data *data);
 int		move_it(int keysem, t_data *data);
 int		render_frame(t_data *data);
-int		force_exit(char *err);
-int		map_height(char **map);
-int		map_width(char *map);
+int		force_exit(char *str, char *err);
 void	create_map(char **map, t_data *data);
 void	put_wall(t_data *data, int x, int y);
-void	data_imgs_des_init(t_data *data, int der);
 void	put_walk(t_data *data, int x, int y);
 void	set_enemy_pos(t_data *data, char **map);
 void	my_destroy_imgs(t_data *data, void **img, int n);
-void	init_plr_frames(t_data *data, int der);
-void	check_for_loss(t_data *data);
+void	init_plr_frames(t_data *data);
 void	print_textures(char *map, t_data *data, int *y);
-void	print_move(t_data *data);
 void	print_move(t_data *data);
 void	put_collect(t_data *data, int x, int y);
 void	put_door(t_data *data, int x, int y, int multiply);
 void	set_plr_position(t_data *data, char **map);
-void	set_exit_position(t_data *data);
 void	data_init(t_data *data);
+void	init_imgs(t_data *data);
 void	init_enm_frames(t_data *data);
 void	move_enemy(t_data *data);
 int		check_wall(t_data *data, int x, int y);
 void	check_for_win(t_data *data);
 void	check_for_loss(t_data *data);
-void	change_der(t_data *data, int keysem);
-void	data_imgs_des_init(t_data *data, int der);
 int		close_exit(t_data *data, char *err);
 void	clear_map_arr(char **map);
 void	check_line(t_data *data, char *map_line, char *map);
-void	check_file_path(t_data *data, char *map);
-void	check_for_character(char *line);
+void	check_file_format(t_data *data, char *map);
+void	check_for_characters(char *line, char *map);
 void	check_for_invalid(t_data *data, char *map, int e, int p);
 char	**check_map(t_data *data, char *map);
-char	**check_for_valid_path(t_data *data, char **map, int x, int y);
-void	check_path(char **map);
-void	check_for_invalid(t_data *data, char *map, int e, int p);
+void	check_valid_path(t_data *data, char **map, char **res, char *map_str);
+void	check_path(char **map, char **res);
 void	check_valid_imgs(t_data *data, void **imgs, int n);
 void	my_destroy_imgs(t_data *data, void **img, int n);
-size_t	ft_strlen(const char *s);
 int		close_window(t_data *data);
 
 #endif

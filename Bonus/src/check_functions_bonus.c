@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:50:34 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/24 14:43:20 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:43:10 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ void	check_for_loss(t_data *data)
 		close_exit(data, "You Lost XD\n");
 }
 
-void	change_der(t_data *data, int keysem)
+void	my_destroy_imgs(t_data *data, void **img, int n)
 {
-	if (keysem == 0)
-		data_imgs_des_init(data, 1);
-	else if (keysem == 2)
-		data_imgs_des_init(data, 0);
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		mlx_destroy_image(data->mlx_ptr, img[i++]);
+	}
 }

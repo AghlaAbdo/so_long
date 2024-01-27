@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:27:00 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/24 14:43:12 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 10:40:52 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ int	render_frame(t_data *data)
 			put_walk(data, data->plr_x, data->plr_y);
 		else if (data->map_data.map[data->plr_y / 48][data->plr_x / 48] == 'E')
 			put_door(data, data->plr_x, data->plr_y, 0);
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->frms[data->frm], data->plr_x, data->plr_y);
+		if (data->der == 0)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->frms_r[data->frm], data->plr_x, data->plr_y);
+		else if (data->der == 1)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->frms_l[data->frm], data->plr_x, data->plr_y);
 		if (data->enm.x != 0)
 			clear_enm_pos(data);
 		data->interval = 0;
@@ -62,11 +66,15 @@ void	print_move(t_data *data)
 	char	*n_move;
 
 	n_move = ft_itoa(data->moves);
+	if (!n_move)
+		force_exit(NULL, "Error\nCan't allocate memory for the program");
 	s = ft_strjoin(ft_strdup("Move: "), n_move);
+	if (!s)
+		force_exit(n_move, "Error\nCan't allocate memory for the program");
 	put_wall(data, 0, 0);
 	put_wall(data, 48, 0);
 	put_wall(data, 96, 0);
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 24, 24, 0xFFFFFF, s);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 5, 10, 0xFFFFFF, s);
 	free(n_move);
 	free(s);
 }
@@ -87,8 +95,12 @@ void	handle_key_input(int keysem, t_data *data)
 			data->plr_x += 48;
 		else if (keysem == 13)
 			data->plr_y -= 48;
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->frms[0],
-			data->plr_x, data->plr_y);
+		if (data->der == 0)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->frms_r[data->frm], data->plr_x, data->plr_y);
+		else if (data->der == 1)
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->frms_l[data->frm], data->plr_x, data->plr_y);
 		if (data->map_data.map[data->bkp_p_y / 48][data->bkp_p_x / 48] == 'E')
 			put_door(data, data->bkp_p_x, data->bkp_p_y, 0);
 		data->moves += 1;
@@ -102,7 +114,10 @@ int	move_it(int keysem, t_data *data)
 	{
 		data->bkp_p_x = data->plr_x;
 		data->bkp_p_y = data->plr_y;
-		change_der(data, keysem);
+		if (data->der == 0 && keysem == 0)
+			data->der = 1;
+		else if (data->der == 1 && keysem == 2)
+			data->der = 0;
 		handle_key_input(keysem, data);
 		if (data->map_data.map[data->plr_y / 48][data->plr_x / 48] == 'C')
 		{

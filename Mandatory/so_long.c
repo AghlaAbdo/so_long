@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 15:54:48 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 12:25:59 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 10:31:09 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static void	create_map(char **map, t_data *data)
 
 int	close_window(t_data *data)
 {
-	// mlx_destroy_image(data->mlx_ptr, data->p_img);
 	my_destroy_imgs(data, (void *[]){data->wall, data->walk,
-		data->collect, data->door_c, data->door_o, data->p_frm_r, data->p_frm_l}, 7);
+		data->collect, data->door_c, data->door_o,
+		data->p_frm_r, data->p_frm_l}, 7);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	clear_map_arr(data->map_data.map);
 	exit(0);
@@ -55,9 +55,9 @@ int	close_window(t_data *data)
 int	close_exit(t_data *data, char *err)
 {
 	ft_putstr_fd(err, 1);
-	// mlx_destroy_image(data->mlx_ptr, data->p_img);
 	my_destroy_imgs(data, (void *[]){data->wall, data->walk,
-		data->collect, data->door_c, data->door_o, data->p_frm_r, data->p_frm_l}, 7);
+		data->collect, data->door_c, data->door_o,
+		data->p_frm_r, data->p_frm_l}, 7);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	clear_map_arr(data->map_data.map);
 	exit(0);
@@ -73,32 +73,10 @@ int	force_exit(char *str, char *err)
 	return (0);
 }
 
-void	init_imgs(t_data *data)
-{
-	int	w;
-	int	h;
-	
-	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL, &w, &h);
-	data->walk = mlx_xpm_file_to_image(data->mlx_ptr, WALK, &w, &h);
-	data->collect = mlx_xpm_file_to_image(data->mlx_ptr, COLLECT, &w, &h);
-	data->door_c = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_CLOSE, &w, &h);
-	data->door_o = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_OPEN, &w, &h);
-	data->p_frm_r = mlx_xpm_file_to_image(data->mlx_ptr, P_R_F_1, &w, &h);
-	data->p_frm_l = mlx_xpm_file_to_image(data->mlx_ptr, P_L_F_1, &w, &h);
-	check_valid_imgs(data, (void *[]){data->wall, data->walk,
-		data->collect, data->door_c, data->door_o, data->p_frm_r, data->p_frm_l}, 7);
-}
-
-void	leaks(void)
-{
-	system("leaks so_long");
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	atexit(leaks);
 	if (argc != 2)
 		force_exit(NULL, "Error\nInvalide number of arguments\n");
 	data_init(&data);
@@ -110,11 +88,9 @@ int	main(int argc, char *argv[])
 	if (!data.mlx_ptr || !data.win_ptr)
 	{
 		clear_map_arr(data.map_data.map);
-		force_exit(NULL, "Error\nCan't establish connection and create window\n");
+		force_exit(NULL, "Error\nCan't create a window\n");
 	}
 	init_imgs(&data);
-	// set_exit_position(&data);
-	// init_plr_frames(&data, 0);
 	create_map(data.map_data.map, &data);
 	mlx_hook(data.win_ptr, 2, 0, &move_it, &data);
 	mlx_hook(data.win_ptr, 17, 0, &close_window, &data);

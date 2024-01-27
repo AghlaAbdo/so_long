@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 11:17:41 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 12:27:51 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:25:59 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	check_path(char **map, char **res)
 	}
 	clear_map_arr(map);
 }
+
 char	**my_floodfill(t_data *data, char **map, int x, int y)
 {
 	if (x < 0 || x >= data->win_x || y < 0 || y >= data->win_y
@@ -70,14 +71,16 @@ char	**my_floodfill(t_data *data, char **map, int x, int y)
 	return (map);
 }
 
-void	check_for_valid_path(t_data *data, char **map, char **res)
+void	check_valid_path(t_data *data, char **map, char **res, char *map_str)
 {
+	free(map_str);
 	if (!map)
 	{
 		clear_map_arr(res);
 		force_exit(NULL, "Error\nCan't allocate memory for the program");
 	}
-	check_path(my_floodfill(data, map, data->plr_x / 48, data->plr_y / 48), res);
+	check_path(my_floodfill(data, map,
+			data->plr_x / 48, data->plr_y / 48), res);
 }
 
 void	check_valid_imgs(t_data *data, void **imgs, int n)

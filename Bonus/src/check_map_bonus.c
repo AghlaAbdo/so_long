@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:21:52 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/24 14:43:23 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:37:06 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,45 @@ void	check_line(t_data *data, char *map_line, char *map)
 	if (count != data->win_x)
 	{
 		close(data->fd);
-		free(map);
 		free(map_line);
-		force_exit("Error\nMap is not rectangular\n");
+		force_exit(map, "Error\nMap is not rectangular\n");
 	}
 	if (map_line[0] != '1' || map_line[count -1] != '1')
 	{
 		free(map_line);
-		free(map);
 		close(data->fd);
-		force_exit("Error\nmap is not surrounded by walls\n");
+		force_exit(map, "Error\nmap is not surrounded by walls\n");
 	}
-	check_for_character(map_line);
+	check_for_characters(map_line, map);
 }
 
-void	check_file_path(t_data *data, char *map)
+void	check_file_format(t_data *data, char *map)
 {
 	char	*set;
-	int		i;
 
 	set = ".ber";
-	i = ft_strlen(map) - 4;
-	while (map[i])
+	map = ft_strrchr(map, '.');
+	if (!map)
 	{
-		if (map[i++] != *set++)
+		close(data->fd);
+		force_exit(NULL, "Error\nInvalid file format\n");
+	}
+	while (*set)
+	{
+		if (*set++ != *map++)
 		{
 			close(data->fd);
-			force_exit("Error\nInvalid file format\n");
+			force_exit(NULL, "Error\nInvalid file format\n");
 		}
+	}
+	if (*set != *map)
+	{
+		close(data->fd);
+		force_exit(NULL, "Error\nInvalid file format\n");
 	}
 }
 
-void	check_for_character(char *line)
+void	check_for_characters(char *line, char *map)
 {
 	int	i;
 
@@ -60,14 +67,16 @@ void	check_for_character(char *line)
 	{
 		if (line[i] != '1' && line[i] != '0'
 			&& line[i] != 'P' && line[i] != 'E' && line[i] != 'C')
-			force_exit("Error\nUnkown characters in the map\n");
+		{
+			free(line);
+			force_exit(map, "Error\nUnkown characters in the map\n");
+		}
 		i++;
 	}
 }
 
-char	**check_map(t_data *data, char *map)
+static void	verify_map_is_valid(t_data *data, char *map)
 {
-	char	**res;
 	int		i;
 	int		e;
 	int		p;
@@ -86,10 +95,17 @@ char	**check_map(t_data *data, char *map)
 		i++;
 	}
 	check_for_invalid(data, map, e, p);
+}
+
+char	**check_map(t_data *data, char *map)
+{
+	char	**res;
+
+	verify_map_is_valid(data, map);
 	res = ft_split(map, '\n');
+	if (!res)
+		force_exit(map, "Error\nCan't allocate memory for the program");
 	set_plr_position(data, res);
-	check_path(check_for_valid_path(data,
-			ft_split(map, '\n'), data->plr_x / 48, data->plr_y / 48));
-	free(map);
+	check_valid_path(data, ft_split(map, '\n'), res, map);
 	return (res);
 }

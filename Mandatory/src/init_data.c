@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:35:57 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 10:11:25 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:28:21 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,53 +35,36 @@ void	set_plr_position(t_data *data, char **map)
 	}
 }
 
-// void	set_exit_position(t_data *data)
-// {
-// 	int	x;
-// 	int	y;
+void	init_imgs(t_data *data)
+{
+	int	w;
+	int	h;
 
-// 	y = 0;
-// 	while (data->map_data.map[y])
-// 	{
-// 		x = 0;
-// 		while (data->map_data.map[y][x])
-// 		{
-// 			if (data->map_data.map[y][x] == 'E')
-// 			{
-// 				data->map_data.exit_x = x * 48;
-// 				data->map_data.exit_y = y * 48;
-// 				return ;
-// 			}
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
+	data->wall = mlx_xpm_file_to_image(data->mlx_ptr, WALL, &w, &h);
+	data->walk = mlx_xpm_file_to_image(data->mlx_ptr, WALK, &w, &h);
+	data->collect = mlx_xpm_file_to_image(data->mlx_ptr, COLLECT, &w, &h);
+	data->door_c = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_CLOSE, &w, &h);
+	data->door_o = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_OPEN, &w, &h);
+	data->p_frm_r = mlx_xpm_file_to_image(data->mlx_ptr, P_R_F_1, &w, &h);
+	data->p_frm_l = mlx_xpm_file_to_image(data->mlx_ptr, P_L_F_1, &w, &h);
+	check_valid_imgs(data, (void *[]){data->wall, data->walk, data->collect,
+		data->door_c, data->door_o, data->p_frm_r, data->p_frm_l}, 7);
+}
 
 void	data_init(t_data *data)
 {
-	// data->interval = 0;
 	data->moves = 0;
 	data->der = 0;
 	data->map_data.c = 0;
 }
 
-// void	init_plr_frames(t_data *data, int der)
-// {
-// 	int	w;
-// 	int	h;
+void	my_destroy_imgs(t_data *data, void **img, int n)
+{
+	int	i;
 
-// 	if (der == 1)
-// 	{
-// 		data->p_frm_r = mlx_xpm_file_to_image(data->mlx_ptr, P_L_F_1, &w, &h);
-// 	}
-// 	else if (der == 0)
-// 	{
-// 		data->p_frm_r = mlx_xpm_file_to_image(data->mlx_ptr, P_R_F_1, &w, &h);
-// 	}
-// 	if (!data->p_frm_r)
-// 	{
-// 		clear_map_arr(data->map_data.map);
-// 		force_exit("Error\nDon't have access to resources\n");
-// 	}
-// }
+	i = 0;
+	while (i < n)
+	{
+		mlx_destroy_image(data->mlx_ptr, img[i++]);
+	}
+}

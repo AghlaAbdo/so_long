@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:12 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 12:50:29 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:19:50 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	check_wall_line(t_data *data, char *map_line, char *map)
 	}
 }
 
-void	free_and_exit(char *map_line, char *map, char *temp, char *err)
+void	free_and_exit(char *map_line, char *map, char *temp)
 {
 	free(temp);
 	free(map_line);
-	force_exit(map, err);
+	force_exit(map, "Error\nCan't allocate memory for the program");
 }
 
 char	**handle_last_line(t_data *data, char *map_line, char *map)
@@ -59,6 +59,8 @@ char	**handle_the_rest(t_data *data, char *map_line, char *map, char *temp)
 {
 	int	count;
 
+	if (!temp)
+		free_and_exit(map_line, map, temp);
 	count = 0;
 	while (map_line)
 	{
@@ -77,9 +79,9 @@ char	**handle_the_rest(t_data *data, char *map_line, char *map, char *temp)
 		temp = ft_strdup(map_line);
 		map = ft_strjoin(map, map_line);
 		if (!temp || !map)
-		free_and_exit(map_line, map, temp, "Error\nCan't allocate memory for the program");
+			free_and_exit(map_line, map, temp);
 	}
-	return (handle_last_line(data, map_line, map));
+	return (close(data->fd), check_map(data, map));
 }
 
 char	**handle_map(char *map, t_data *data)

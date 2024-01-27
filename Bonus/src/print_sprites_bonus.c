@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 09:22:27 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/25 18:47:30 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:41:48 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,10 @@ void	put_collect(t_data *data, int x, int y)
 
 void	put_door(t_data *data, int x, int y, int state)
 {
-	int		w;
-	int		h;
-
 	if (state == 0)
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->door, x, y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->door_c, x, y);
 	else if (state == 1)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->door);
-		data->door = mlx_xpm_file_to_image(data->mlx_ptr, DOOR_OPEN, &w, &h);
-		if (!data->door)
-		{
-			clear_map_arr(data->map_data.map);
-			force_exit("Error\nDonn't have access to resources\n");
-		}
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->door, x, y);
-	}
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->door_o, x, y);
 }

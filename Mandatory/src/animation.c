@@ -6,13 +6,13 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:27:00 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 13:10:39 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:20:09 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	print_move(t_data *data)
+void	print_move(t_data *data)
 {
 	char	*s;
 	char	*n_move;
@@ -29,10 +29,10 @@ static void	print_move(t_data *data)
 	free(s);
 }
 
-static void	update_frames(t_data *data)
+void	update_frames(t_data *data)
 {
 	if (data->map_data.map[data->plr_y / 48][data->plr_x / 48] == 'C')
-			put_walk(data, data->plr_x, data->plr_y);
+		put_walk(data, data->plr_x, data->plr_y);
 	if (data->der == 0)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_frm_r,
 			data->plr_x, data->plr_y);
@@ -43,7 +43,7 @@ static void	update_frames(t_data *data)
 		put_door(data, data->bkp_p_x, data->bkp_p_y, 0);
 }
 
-static void	handle_key_input(int keysem, t_data *data)
+void	handle_key_input(int keysem, t_data *data)
 {
 	if ((keysem == 0 && !check_wall(data, data->plr_x -48, data->plr_y))
 		|| (keysem == 1 && !check_wall(data, data->plr_x, data->plr_y + 48))

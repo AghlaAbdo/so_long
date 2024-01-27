@@ -6,7 +6,7 @@
 /*   By: aaghla <aaghla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:21:52 by aaghla            #+#    #+#             */
-/*   Updated: 2024/01/26 12:32:50 by aaghla           ###   ########.fr       */
+/*   Updated: 2024/01/27 09:27:19 by aaghla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,21 @@ void	check_file_format(t_data *data, char *map)
 	map = ft_strrchr(map, '.');
 	if (!map)
 	{
-			close(data->fd);
-			force_exit(NULL, "Error\nInvalid file format\n");
+		close(data->fd);
+		force_exit(NULL, "Error\nInvalid file format\n");
 	}
-	while (*map)
+	while (*set)
 	{
-		if (*map++ != *set++)
+		if (*set++ != *map++)
 		{
 			close(data->fd);
 			force_exit(NULL, "Error\nInvalid file format\n");
 		}
+	}
+	if (*set != *map)
+	{
+		close(data->fd);
+		force_exit(NULL, "Error\nInvalid file format\n");
 	}
 }
 
@@ -70,7 +75,7 @@ void	check_for_characters(char *line, char *map)
 	}
 }
 
-static void	verify_map_is_valid(t_data *data, char *map)
+void	verify_map_is_valid(t_data *data, char *map)
 {
 	int		i;
 	int		e;
@@ -101,7 +106,6 @@ char	**check_map(t_data *data, char *map)
 	if (!res)
 		force_exit(map, "Error\nCan't allocate memory for the program");
 	set_plr_position(data, res);
-	check_for_valid_path(data, ft_split(map, '\n'), res);
-	free(map);
+	check_valid_path(data, ft_split(map, '\n'), res, map);
 	return (res);
 }
